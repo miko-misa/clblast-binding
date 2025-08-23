@@ -3,4 +3,23 @@ name = "clblast-binding"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = ["vendored-clblast", "vendored-opencl-headers"]
+
+vendored-clblast = []
+system-clblast = []
+
+vendored-opencl-headers = []
+system-opencl-headers = []
+generate-bindings = []
+
 [dependencies]
+
+[build-dependencies]
+bindgen = "0.72"
+cmake = "0.1"
+pkg-config = "0.3"
+vcpkg = "0.2"
+
+[package.metadata.docs.rs]
+features = ["vendored-clblast", "vendored-opencl-headers"]
