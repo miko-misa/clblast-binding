@@ -1,0 +1,6 @@
+[submodule "clblast-src"]
+	path = vendor/clblast
+	url = https://github.com/CNugteren/CLBlast.git
+[submodule "third_party/OpenCL-Headers"]
+	path = vendor/opencl_headers
+	url = https://github.com/KhronosGroup/OpenCL-Headers
