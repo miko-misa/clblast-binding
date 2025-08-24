@@ -8,6 +8,9 @@ repository = "https://github.com/miko-misa/clblast_binding"
 keywords = ["opencl", "clblast", "blas", "ffi", "gpu"]
 categories = ["api-bindings", "external-ffi-bindings"]
 build = "build.rs"
+license = "MIT"
+license-file = "LICENSE"
+authors = ["miko-misa (hacnosuke) <hacnosuke@gmail.com>"]
 
 [features]
 default = ["vendored-clblast", "vendored-opencl-headers"]
