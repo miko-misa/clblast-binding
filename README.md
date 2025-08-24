@@ -20,7 +20,7 @@ or use Git
 
 ```toml
 [dependencies]
-clblast-binding = { git = "https://github.com/miko-misa/clblast_binding" }
+clblast-binding = { git = "https://github.com/miko-misa/clblast-binding" }
 ```
 
 ## Quick Start
