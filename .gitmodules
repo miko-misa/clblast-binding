@@ -1,0 +1,6 @@
+[submodule "vendor/clblast"]
+	path = vendor/clblast
+	url = https://github.com/CNugteren/CLBlast.git
+[submodule "vendor/opencl_headers"]
+	path = vendor/opencl_headers
+	url = https://github.com/KhronosGroup/OpenCL-Headers
