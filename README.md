@@ -51,3 +51,9 @@ fn main() -> ocl::Result<()> {
   Ok(())
 }
 ```
+
+## options
+```bash
+# force re-build binding_static.rs and clblast_ocl_wrap.rs
+cargo build --features generate-bindings
+```
