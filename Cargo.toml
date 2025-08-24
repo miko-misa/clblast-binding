@@ -1,7 +1,13 @@
 [package]
 name = "clblast-binding"
-version = "0.1.0"
+version = "0.1.0-alpha.1"
 edition = "2024"
+description = "Safe-ish OpenCL CLBlast bindings + automatic ocl wrappers."
+readme = "README.md"
+repository = "https://github.com/miko-misa/clblast_binding"
+keywords = ["opencl", "clblast", "blas", "ffi", "gpu"]
+categories = ["api-bindings", "external-ffi-bindings"]
+build = "build.rs"
 
 [features]
 default = ["vendored-clblast", "vendored-opencl-headers"]
@@ -31,3 +37,4 @@ heck = "0.5.0"
 
 [package.metadata.docs.rs]
 features = ["vendored-clblast", "vendored-opencl-headers"]
+rustdoc-args = ["--cfg", "docsrs"]
