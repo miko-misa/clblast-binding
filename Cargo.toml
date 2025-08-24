@@ -14,12 +14,20 @@ system-opencl-headers = []
 generate-bindings = []
 
 [dependencies]
+cl-sys = "0.4.3"
+ocl = "0.19.7"
+thiserror = "2.0.16"
 
 [build-dependencies]
 bindgen = "0.72"
 cmake = "0.1"
 pkg-config = "0.3"
 vcpkg = "0.2"
+syn = { version = "2.0", features = ["full", "extra-traits"] }
+quote = "1.0"
+prettyplease = "0.2"
+proc-macro2 = "1.0"
+heck = "0.5.0"
 
 [package.metadata.docs.rs]
 features = ["vendored-clblast", "vendored-opencl-headers"]

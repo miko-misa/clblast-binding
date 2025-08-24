@@ -7,4361 +7,4382 @@ pub type cl_double = f64;
 #[repr(align(8))]
 #[derive(Copy, Clone)]
 pub union cl_float2 {
-    pub s: [cl_float; 2usize],
-    pub __bindgen_anon_1: cl_float2__bindgen_ty_1,
-    pub __bindgen_anon_2: cl_float2__bindgen_ty_2,
-    pub __bindgen_anon_3: cl_float2__bindgen_ty_3,
+  pub s: [cl_float; 2usize],
+  pub __bindgen_anon_1: cl_float2__bindgen_ty_1,
+  pub __bindgen_anon_2: cl_float2__bindgen_ty_2,
+  pub __bindgen_anon_3: cl_float2__bindgen_ty_3,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cl_float2__bindgen_ty_1 {
-    pub x: cl_float,
-    pub y: cl_float,
+  pub x: cl_float,
+  pub y: cl_float,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_float2__bindgen_ty_1"][::std::mem::size_of::<cl_float2__bindgen_ty_1>() - 8usize];
-    ["Alignment of cl_float2__bindgen_ty_1"]
-        [::std::mem::align_of::<cl_float2__bindgen_ty_1>() - 4usize];
-    ["Offset of field: cl_float2__bindgen_ty_1::x"]
-        [::std::mem::offset_of!(cl_float2__bindgen_ty_1, x) - 0usize];
-    ["Offset of field: cl_float2__bindgen_ty_1::y"]
-        [::std::mem::offset_of!(cl_float2__bindgen_ty_1, y) - 4usize];
+  ["Size of cl_float2__bindgen_ty_1"][::std::mem::size_of::<cl_float2__bindgen_ty_1>() - 8usize];
+  ["Alignment of cl_float2__bindgen_ty_1"]
+    [::std::mem::align_of::<cl_float2__bindgen_ty_1>() - 4usize];
+  ["Offset of field: cl_float2__bindgen_ty_1::x"]
+    [::std::mem::offset_of!(cl_float2__bindgen_ty_1, x) - 0usize];
+  ["Offset of field: cl_float2__bindgen_ty_1::y"]
+    [::std::mem::offset_of!(cl_float2__bindgen_ty_1, y) - 4usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cl_float2__bindgen_ty_2 {
-    pub s0: cl_float,
-    pub s1: cl_float,
+  pub s0: cl_float,
+  pub s1: cl_float,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_float2__bindgen_ty_2"][::std::mem::size_of::<cl_float2__bindgen_ty_2>() - 8usize];
-    ["Alignment of cl_float2__bindgen_ty_2"]
-        [::std::mem::align_of::<cl_float2__bindgen_ty_2>() - 4usize];
-    ["Offset of field: cl_float2__bindgen_ty_2::s0"]
-        [::std::mem::offset_of!(cl_float2__bindgen_ty_2, s0) - 0usize];
-    ["Offset of field: cl_float2__bindgen_ty_2::s1"]
-        [::std::mem::offset_of!(cl_float2__bindgen_ty_2, s1) - 4usize];
+  ["Size of cl_float2__bindgen_ty_2"][::std::mem::size_of::<cl_float2__bindgen_ty_2>() - 8usize];
+  ["Alignment of cl_float2__bindgen_ty_2"]
+    [::std::mem::align_of::<cl_float2__bindgen_ty_2>() - 4usize];
+  ["Offset of field: cl_float2__bindgen_ty_2::s0"]
+    [::std::mem::offset_of!(cl_float2__bindgen_ty_2, s0) - 0usize];
+  ["Offset of field: cl_float2__bindgen_ty_2::s1"]
+    [::std::mem::offset_of!(cl_float2__bindgen_ty_2, s1) - 4usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cl_float2__bindgen_ty_3 {
-    pub lo: cl_float,
-    pub hi: cl_float,
+  pub lo: cl_float,
+  pub hi: cl_float,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_float2__bindgen_ty_3"][::std::mem::size_of::<cl_float2__bindgen_ty_3>() - 8usize];
-    ["Alignment of cl_float2__bindgen_ty_3"]
-        [::std::mem::align_of::<cl_float2__bindgen_ty_3>() - 4usize];
-    ["Offset of field: cl_float2__bindgen_ty_3::lo"]
-        [::std::mem::offset_of!(cl_float2__bindgen_ty_3, lo) - 0usize];
-    ["Offset of field: cl_float2__bindgen_ty_3::hi"]
-        [::std::mem::offset_of!(cl_float2__bindgen_ty_3, hi) - 4usize];
+  ["Size of cl_float2__bindgen_ty_3"][::std::mem::size_of::<cl_float2__bindgen_ty_3>() - 8usize];
+  ["Alignment of cl_float2__bindgen_ty_3"]
+    [::std::mem::align_of::<cl_float2__bindgen_ty_3>() - 4usize];
+  ["Offset of field: cl_float2__bindgen_ty_3::lo"]
+    [::std::mem::offset_of!(cl_float2__bindgen_ty_3, lo) - 0usize];
+  ["Offset of field: cl_float2__bindgen_ty_3::hi"]
+    [::std::mem::offset_of!(cl_float2__bindgen_ty_3, hi) - 4usize];
 };
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_float2"][::std::mem::size_of::<cl_float2>() - 8usize];
-    ["Alignment of cl_float2"][::std::mem::align_of::<cl_float2>() - 8usize];
-    ["Offset of field: cl_float2::s"][::std::mem::offset_of!(cl_float2, s) - 0usize];
+  ["Size of cl_float2"][::std::mem::size_of::<cl_float2>() - 8usize];
+  ["Alignment of cl_float2"][::std::mem::align_of::<cl_float2>() - 8usize];
+  ["Offset of field: cl_float2::s"][::std::mem::offset_of!(cl_float2, s) - 0usize];
 };
 #[repr(C)]
 #[repr(align(16))]
 #[derive(Copy, Clone)]
 pub union cl_double2 {
-    pub s: [cl_double; 2usize],
-    pub __bindgen_anon_1: cl_double2__bindgen_ty_1,
-    pub __bindgen_anon_2: cl_double2__bindgen_ty_2,
-    pub __bindgen_anon_3: cl_double2__bindgen_ty_3,
+  pub s: [cl_double; 2usize],
+  pub __bindgen_anon_1: cl_double2__bindgen_ty_1,
+  pub __bindgen_anon_2: cl_double2__bindgen_ty_2,
+  pub __bindgen_anon_3: cl_double2__bindgen_ty_3,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cl_double2__bindgen_ty_1 {
-    pub x: cl_double,
-    pub y: cl_double,
+  pub x: cl_double,
+  pub y: cl_double,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_double2__bindgen_ty_1"]
-        [::std::mem::size_of::<cl_double2__bindgen_ty_1>() - 16usize];
-    ["Alignment of cl_double2__bindgen_ty_1"]
-        [::std::mem::align_of::<cl_double2__bindgen_ty_1>() - 8usize];
-    ["Offset of field: cl_double2__bindgen_ty_1::x"]
-        [::std::mem::offset_of!(cl_double2__bindgen_ty_1, x) - 0usize];
-    ["Offset of field: cl_double2__bindgen_ty_1::y"]
-        [::std::mem::offset_of!(cl_double2__bindgen_ty_1, y) - 8usize];
+  ["Size of cl_double2__bindgen_ty_1"][::std::mem::size_of::<cl_double2__bindgen_ty_1>() - 16usize];
+  ["Alignment of cl_double2__bindgen_ty_1"]
+    [::std::mem::align_of::<cl_double2__bindgen_ty_1>() - 8usize];
+  ["Offset of field: cl_double2__bindgen_ty_1::x"]
+    [::std::mem::offset_of!(cl_double2__bindgen_ty_1, x) - 0usize];
+  ["Offset of field: cl_double2__bindgen_ty_1::y"]
+    [::std::mem::offset_of!(cl_double2__bindgen_ty_1, y) - 8usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cl_double2__bindgen_ty_2 {
-    pub s0: cl_double,
-    pub s1: cl_double,
+  pub s0: cl_double,
+  pub s1: cl_double,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_double2__bindgen_ty_2"]
-        [::std::mem::size_of::<cl_double2__bindgen_ty_2>() - 16usize];
-    ["Alignment of cl_double2__bindgen_ty_2"]
-        [::std::mem::align_of::<cl_double2__bindgen_ty_2>() - 8usize];
-    ["Offset of field: cl_double2__bindgen_ty_2::s0"]
-        [::std::mem::offset_of!(cl_double2__bindgen_ty_2, s0) - 0usize];
-    ["Offset of field: cl_double2__bindgen_ty_2::s1"]
-        [::std::mem::offset_of!(cl_double2__bindgen_ty_2, s1) - 8usize];
+  ["Size of cl_double2__bindgen_ty_2"][::std::mem::size_of::<cl_double2__bindgen_ty_2>() - 16usize];
+  ["Alignment of cl_double2__bindgen_ty_2"]
+    [::std::mem::align_of::<cl_double2__bindgen_ty_2>() - 8usize];
+  ["Offset of field: cl_double2__bindgen_ty_2::s0"]
+    [::std::mem::offset_of!(cl_double2__bindgen_ty_2, s0) - 0usize];
+  ["Offset of field: cl_double2__bindgen_ty_2::s1"]
+    [::std::mem::offset_of!(cl_double2__bindgen_ty_2, s1) - 8usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct cl_double2__bindgen_ty_3 {
-    pub lo: cl_double,
-    pub hi: cl_double,
+  pub lo: cl_double,
+  pub hi: cl_double,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_double2__bindgen_ty_3"]
-        [::std::mem::size_of::<cl_double2__bindgen_ty_3>() - 16usize];
-    ["Alignment of cl_double2__bindgen_ty_3"]
-        [::std::mem::align_of::<cl_double2__bindgen_ty_3>() - 8usize];
-    ["Offset of field: cl_double2__bindgen_ty_3::lo"]
-        [::std::mem::offset_of!(cl_double2__bindgen_ty_3, lo) - 0usize];
-    ["Offset of field: cl_double2__bindgen_ty_3::hi"]
-        [::std::mem::offset_of!(cl_double2__bindgen_ty_3, hi) - 8usize];
+  ["Size of cl_double2__bindgen_ty_3"][::std::mem::size_of::<cl_double2__bindgen_ty_3>() - 16usize];
+  ["Alignment of cl_double2__bindgen_ty_3"]
+    [::std::mem::align_of::<cl_double2__bindgen_ty_3>() - 8usize];
+  ["Offset of field: cl_double2__bindgen_ty_3::lo"]
+    [::std::mem::offset_of!(cl_double2__bindgen_ty_3, lo) - 0usize];
+  ["Offset of field: cl_double2__bindgen_ty_3::hi"]
+    [::std::mem::offset_of!(cl_double2__bindgen_ty_3, hi) - 8usize];
 };
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of cl_double2"][::std::mem::size_of::<cl_double2>() - 16usize];
-    ["Alignment of cl_double2"][::std::mem::align_of::<cl_double2>() - 16usize];
-    ["Offset of field: cl_double2::s"][::std::mem::offset_of!(cl_double2, s) - 0usize];
+  ["Size of cl_double2"][::std::mem::size_of::<cl_double2>() - 16usize];
+  ["Alignment of cl_double2"][::std::mem::align_of::<cl_double2>() - 16usize];
+  ["Offset of field: cl_double2::s"][::std::mem::offset_of!(cl_double2, s) - 0usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _cl_device_id {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 pub type cl_device_id = *mut _cl_device_id;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _cl_command_queue {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 pub type cl_command_queue = *mut _cl_command_queue;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _cl_mem {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 pub type cl_mem = *mut _cl_mem;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _cl_event {
-    _unused: [u8; 0],
+  _unused: [u8; 0],
 }
 pub type cl_event = *mut _cl_event;
-pub const CLBlastStatusCode__CLBlastSuccess: CLBlastStatusCode_ = 0;
-pub const CLBlastStatusCode__CLBlastOpenCLCompilerNotAvailable: CLBlastStatusCode_ = -3;
-pub const CLBlastStatusCode__CLBlastTempBufferAllocFailure: CLBlastStatusCode_ = -4;
-pub const CLBlastStatusCode__CLBlastOpenCLOutOfResources: CLBlastStatusCode_ = -5;
-pub const CLBlastStatusCode__CLBlastOpenCLOutOfHostMemory: CLBlastStatusCode_ = -6;
-pub const CLBlastStatusCode__CLBlastOpenCLBuildProgramFailure: CLBlastStatusCode_ = -11;
-pub const CLBlastStatusCode__CLBlastInvalidValue: CLBlastStatusCode_ = -30;
-pub const CLBlastStatusCode__CLBlastInvalidCommandQueue: CLBlastStatusCode_ = -36;
-pub const CLBlastStatusCode__CLBlastInvalidMemObject: CLBlastStatusCode_ = -38;
-pub const CLBlastStatusCode__CLBlastInvalidBinary: CLBlastStatusCode_ = -42;
-pub const CLBlastStatusCode__CLBlastInvalidBuildOptions: CLBlastStatusCode_ = -43;
-pub const CLBlastStatusCode__CLBlastInvalidProgram: CLBlastStatusCode_ = -44;
-pub const CLBlastStatusCode__CLBlastInvalidProgramExecutable: CLBlastStatusCode_ = -45;
-pub const CLBlastStatusCode__CLBlastInvalidKernelName: CLBlastStatusCode_ = -46;
-pub const CLBlastStatusCode__CLBlastInvalidKernelDefinition: CLBlastStatusCode_ = -47;
-pub const CLBlastStatusCode__CLBlastInvalidKernel: CLBlastStatusCode_ = -48;
-pub const CLBlastStatusCode__CLBlastInvalidArgIndex: CLBlastStatusCode_ = -49;
-pub const CLBlastStatusCode__CLBlastInvalidArgValue: CLBlastStatusCode_ = -50;
-pub const CLBlastStatusCode__CLBlastInvalidArgSize: CLBlastStatusCode_ = -51;
-pub const CLBlastStatusCode__CLBlastInvalidKernelArgs: CLBlastStatusCode_ = -52;
-pub const CLBlastStatusCode__CLBlastInvalidLocalNumDimensions: CLBlastStatusCode_ = -53;
-pub const CLBlastStatusCode__CLBlastInvalidLocalThreadsTotal: CLBlastStatusCode_ = -54;
-pub const CLBlastStatusCode__CLBlastInvalidLocalThreadsDim: CLBlastStatusCode_ = -55;
-pub const CLBlastStatusCode__CLBlastInvalidGlobalOffset: CLBlastStatusCode_ = -56;
-pub const CLBlastStatusCode__CLBlastInvalidEventWaitList: CLBlastStatusCode_ = -57;
-pub const CLBlastStatusCode__CLBlastInvalidEvent: CLBlastStatusCode_ = -58;
-pub const CLBlastStatusCode__CLBlastInvalidOperation: CLBlastStatusCode_ = -59;
-pub const CLBlastStatusCode__CLBlastInvalidBufferSize: CLBlastStatusCode_ = -61;
-pub const CLBlastStatusCode__CLBlastInvalidGlobalWorkSize: CLBlastStatusCode_ = -63;
-pub const CLBlastStatusCode__CLBlastNotImplemented: CLBlastStatusCode_ = -1024;
-pub const CLBlastStatusCode__CLBlastInvalidMatrixA: CLBlastStatusCode_ = -1022;
-pub const CLBlastStatusCode__CLBlastInvalidMatrixB: CLBlastStatusCode_ = -1021;
-pub const CLBlastStatusCode__CLBlastInvalidMatrixC: CLBlastStatusCode_ = -1020;
-pub const CLBlastStatusCode__CLBlastInvalidVectorX: CLBlastStatusCode_ = -1019;
-pub const CLBlastStatusCode__CLBlastInvalidVectorY: CLBlastStatusCode_ = -1018;
-pub const CLBlastStatusCode__CLBlastInvalidDimension: CLBlastStatusCode_ = -1017;
-pub const CLBlastStatusCode__CLBlastInvalidLeadDimA: CLBlastStatusCode_ = -1016;
-pub const CLBlastStatusCode__CLBlastInvalidLeadDimB: CLBlastStatusCode_ = -1015;
-pub const CLBlastStatusCode__CLBlastInvalidLeadDimC: CLBlastStatusCode_ = -1014;
-pub const CLBlastStatusCode__CLBlastInvalidIncrementX: CLBlastStatusCode_ = -1013;
-pub const CLBlastStatusCode__CLBlastInvalidIncrementY: CLBlastStatusCode_ = -1012;
-pub const CLBlastStatusCode__CLBlastInsufficientMemoryA: CLBlastStatusCode_ = -1011;
-pub const CLBlastStatusCode__CLBlastInsufficientMemoryB: CLBlastStatusCode_ = -1010;
-pub const CLBlastStatusCode__CLBlastInsufficientMemoryC: CLBlastStatusCode_ = -1009;
-pub const CLBlastStatusCode__CLBlastInsufficientMemoryX: CLBlastStatusCode_ = -1008;
-pub const CLBlastStatusCode__CLBlastInsufficientMemoryY: CLBlastStatusCode_ = -1007;
-pub const CLBlastStatusCode__CLBlastInsufficientMemoryTemp: CLBlastStatusCode_ = -2050;
-pub const CLBlastStatusCode__CLBlastInvalidBatchCount: CLBlastStatusCode_ = -2049;
-pub const CLBlastStatusCode__CLBlastInvalidOverrideKernel: CLBlastStatusCode_ = -2048;
-pub const CLBlastStatusCode__CLBlastMissingOverrideParameter: CLBlastStatusCode_ = -2047;
-pub const CLBlastStatusCode__CLBlastInvalidLocalMemUsage: CLBlastStatusCode_ = -2046;
-pub const CLBlastStatusCode__CLBlastNoHalfPrecision: CLBlastStatusCode_ = -2045;
-pub const CLBlastStatusCode__CLBlastNoDoublePrecision: CLBlastStatusCode_ = -2044;
-pub const CLBlastStatusCode__CLBlastInvalidVectorScalar: CLBlastStatusCode_ = -2043;
-pub const CLBlastStatusCode__CLBlastInsufficientMemoryScalar: CLBlastStatusCode_ = -2042;
-pub const CLBlastStatusCode__CLBlastDatabaseError: CLBlastStatusCode_ = -2041;
-pub const CLBlastStatusCode__CLBlastUnknownError: CLBlastStatusCode_ = -2040;
-pub const CLBlastStatusCode__CLBlastUnexpectedError: CLBlastStatusCode_ = -2039;
-pub type CLBlastStatusCode_ = ::std::os::raw::c_int;
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastStatusCode_ {
+  CLBlastSuccess = 0,
+  CLBlastOpenCLCompilerNotAvailable = -3,
+  CLBlastTempBufferAllocFailure = -4,
+  CLBlastOpenCLOutOfResources = -5,
+  CLBlastOpenCLOutOfHostMemory = -6,
+  CLBlastOpenCLBuildProgramFailure = -11,
+  CLBlastInvalidValue = -30,
+  CLBlastInvalidCommandQueue = -36,
+  CLBlastInvalidMemObject = -38,
+  CLBlastInvalidBinary = -42,
+  CLBlastInvalidBuildOptions = -43,
+  CLBlastInvalidProgram = -44,
+  CLBlastInvalidProgramExecutable = -45,
+  CLBlastInvalidKernelName = -46,
+  CLBlastInvalidKernelDefinition = -47,
+  CLBlastInvalidKernel = -48,
+  CLBlastInvalidArgIndex = -49,
+  CLBlastInvalidArgValue = -50,
+  CLBlastInvalidArgSize = -51,
+  CLBlastInvalidKernelArgs = -52,
+  CLBlastInvalidLocalNumDimensions = -53,
+  CLBlastInvalidLocalThreadsTotal = -54,
+  CLBlastInvalidLocalThreadsDim = -55,
+  CLBlastInvalidGlobalOffset = -56,
+  CLBlastInvalidEventWaitList = -57,
+  CLBlastInvalidEvent = -58,
+  CLBlastInvalidOperation = -59,
+  CLBlastInvalidBufferSize = -61,
+  CLBlastInvalidGlobalWorkSize = -63,
+  CLBlastNotImplemented = -1024,
+  CLBlastInvalidMatrixA = -1022,
+  CLBlastInvalidMatrixB = -1021,
+  CLBlastInvalidMatrixC = -1020,
+  CLBlastInvalidVectorX = -1019,
+  CLBlastInvalidVectorY = -1018,
+  CLBlastInvalidDimension = -1017,
+  CLBlastInvalidLeadDimA = -1016,
+  CLBlastInvalidLeadDimB = -1015,
+  CLBlastInvalidLeadDimC = -1014,
+  CLBlastInvalidIncrementX = -1013,
+  CLBlastInvalidIncrementY = -1012,
+  CLBlastInsufficientMemoryA = -1011,
+  CLBlastInsufficientMemoryB = -1010,
+  CLBlastInsufficientMemoryC = -1009,
+  CLBlastInsufficientMemoryX = -1008,
+  CLBlastInsufficientMemoryY = -1007,
+  CLBlastInsufficientMemoryTemp = -2050,
+  CLBlastInvalidBatchCount = -2049,
+  CLBlastInvalidOverrideKernel = -2048,
+  CLBlastMissingOverrideParameter = -2047,
+  CLBlastInvalidLocalMemUsage = -2046,
+  CLBlastNoHalfPrecision = -2045,
+  CLBlastNoDoublePrecision = -2044,
+  CLBlastInvalidVectorScalar = -2043,
+  CLBlastInsufficientMemoryScalar = -2042,
+  CLBlastDatabaseError = -2041,
+  CLBlastUnknownError = -2040,
+  CLBlastUnexpectedError = -2039,
+}
 pub use self::CLBlastStatusCode_ as CLBlastStatusCode;
-pub const CLBlastLayout__CLBlastLayoutRowMajor: CLBlastLayout_ = 101;
-pub const CLBlastLayout__CLBlastLayoutColMajor: CLBlastLayout_ = 102;
-pub type CLBlastLayout_ = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastLayout_ {
+  CLBlastLayoutRowMajor = 101,
+  CLBlastLayoutColMajor = 102,
+}
 pub use self::CLBlastLayout_ as CLBlastLayout;
-pub const CLBlastTranspose__CLBlastTransposeNo: CLBlastTranspose_ = 111;
-pub const CLBlastTranspose__CLBlastTransposeYes: CLBlastTranspose_ = 112;
-pub const CLBlastTranspose__CLBlastTransposeConjugate: CLBlastTranspose_ = 113;
-pub type CLBlastTranspose_ = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastTranspose_ {
+  CLBlastTransposeNo = 111,
+  CLBlastTransposeYes = 112,
+  CLBlastTransposeConjugate = 113,
+}
 pub use self::CLBlastTranspose_ as CLBlastTranspose;
-pub const CLBlastTriangle__CLBlastTriangleUpper: CLBlastTriangle_ = 121;
-pub const CLBlastTriangle__CLBlastTriangleLower: CLBlastTriangle_ = 122;
-pub type CLBlastTriangle_ = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastTriangle_ {
+  CLBlastTriangleUpper = 121,
+  CLBlastTriangleLower = 122,
+}
 pub use self::CLBlastTriangle_ as CLBlastTriangle;
-pub const CLBlastDiagonal__CLBlastDiagonalNonUnit: CLBlastDiagonal_ = 131;
-pub const CLBlastDiagonal__CLBlastDiagonalUnit: CLBlastDiagonal_ = 132;
-pub type CLBlastDiagonal_ = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastDiagonal_ {
+  CLBlastDiagonalNonUnit = 131,
+  CLBlastDiagonalUnit = 132,
+}
 pub use self::CLBlastDiagonal_ as CLBlastDiagonal;
-pub const CLBlastSide__CLBlastSideLeft: CLBlastSide_ = 141;
-pub const CLBlastSide__CLBlastSideRight: CLBlastSide_ = 142;
-pub type CLBlastSide_ = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastSide_ {
+  CLBlastSideLeft = 141,
+  CLBlastSideRight = 142,
+}
 pub use self::CLBlastSide_ as CLBlastSide;
-pub const CLBlastKernelMode__CLBlastKernelModeCrossCorrelation: CLBlastKernelMode_ = 151;
-pub const CLBlastKernelMode__CLBlastKernelModeConvolution: CLBlastKernelMode_ = 152;
-pub type CLBlastKernelMode_ = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastKernelMode_ {
+  CLBlastKernelModeCrossCorrelation = 151,
+  CLBlastKernelModeConvolution = 152,
+}
 pub use self::CLBlastKernelMode_ as CLBlastKernelMode;
-pub const CLBlastPrecision__CLBlastPrecisionHalf: CLBlastPrecision_ = 16;
-pub const CLBlastPrecision__CLBlastPrecisionSingle: CLBlastPrecision_ = 32;
-pub const CLBlastPrecision__CLBlastPrecisionDouble: CLBlastPrecision_ = 64;
-pub const CLBlastPrecision__CLBlastPrecisionComplexSingle: CLBlastPrecision_ = 3232;
-pub const CLBlastPrecision__CLBlastPrecisionComplexDouble: CLBlastPrecision_ = 6464;
-pub type CLBlastPrecision_ = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum CLBlastPrecision_ {
+  CLBlastPrecisionHalf = 16,
+  CLBlastPrecisionSingle = 32,
+  CLBlastPrecisionDouble = 64,
+  CLBlastPrecisionComplexSingle = 3232,
+  CLBlastPrecisionComplexDouble = 6464,
+}
 pub use self::CLBlastPrecision_ as CLBlastPrecision;
 unsafe extern "C" {
-    pub fn CLBlastSrotg(
-        sa_buffer: cl_mem,
-        sa_offset: usize,
-        sb_buffer: cl_mem,
-        sb_offset: usize,
-        sc_buffer: cl_mem,
-        sc_offset: usize,
-        ss_buffer: cl_mem,
-        ss_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDrotg(
-        sa_buffer: cl_mem,
-        sa_offset: usize,
-        sb_buffer: cl_mem,
-        sb_offset: usize,
-        sc_buffer: cl_mem,
-        sc_offset: usize,
-        ss_buffer: cl_mem,
-        ss_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSrotmg(
-        sd1_buffer: cl_mem,
-        sd1_offset: usize,
-        sd2_buffer: cl_mem,
-        sd2_offset: usize,
-        sx1_buffer: cl_mem,
-        sx1_offset: usize,
-        sy1_buffer: cl_mem,
-        sy1_offset: usize,
-        sparam_buffer: cl_mem,
-        sparam_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDrotmg(
-        sd1_buffer: cl_mem,
-        sd1_offset: usize,
-        sd2_buffer: cl_mem,
-        sd2_offset: usize,
-        sx1_buffer: cl_mem,
-        sx1_offset: usize,
-        sy1_buffer: cl_mem,
-        sy1_offset: usize,
-        sparam_buffer: cl_mem,
-        sparam_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSrot(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        cos: f32,
-        sin: f32,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDrot(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        cos: f64,
-        sin: f64,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSrotm(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        sparam_buffer: cl_mem,
-        sparam_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDrotm(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        sparam_buffer: cl_mem,
-        sparam_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSswap(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDswap(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCswap(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZswap(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHswap(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSscal(
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDscal(
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCscal(
-        n: usize,
-        alpha: cl_float2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZscal(
-        n: usize,
-        alpha: cl_double2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHscal(
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastScopy(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDcopy(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCcopy(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZcopy(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHcopy(
-        n: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSaxpy(
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDaxpy(
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCaxpy(
-        n: usize,
-        alpha: cl_float2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZaxpy(
-        n: usize,
-        alpha: cl_double2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHaxpy(
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSdot(
-        n: usize,
-        dot_buffer: cl_mem,
-        dot_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDdot(
-        n: usize,
-        dot_buffer: cl_mem,
-        dot_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHdot(
-        n: usize,
-        dot_buffer: cl_mem,
-        dot_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCdotu(
-        n: usize,
-        dot_buffer: cl_mem,
-        dot_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZdotu(
-        n: usize,
-        dot_buffer: cl_mem,
-        dot_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCdotc(
-        n: usize,
-        dot_buffer: cl_mem,
-        dot_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZdotc(
-        n: usize,
-        dot_buffer: cl_mem,
-        dot_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSnrm2(
-        n: usize,
-        nrm2_buffer: cl_mem,
-        nrm2_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDnrm2(
-        n: usize,
-        nrm2_buffer: cl_mem,
-        nrm2_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastScnrm2(
-        n: usize,
-        nrm2_buffer: cl_mem,
-        nrm2_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDznrm2(
-        n: usize,
-        nrm2_buffer: cl_mem,
-        nrm2_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHnrm2(
-        n: usize,
-        nrm2_buffer: cl_mem,
-        nrm2_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSasum(
-        n: usize,
-        asum_buffer: cl_mem,
-        asum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDasum(
-        n: usize,
-        asum_buffer: cl_mem,
-        asum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastScasum(
-        n: usize,
-        asum_buffer: cl_mem,
-        asum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDzasum(
-        n: usize,
-        asum_buffer: cl_mem,
-        asum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHasum(
-        n: usize,
-        asum_buffer: cl_mem,
-        asum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsum(
-        n: usize,
-        sum_buffer: cl_mem,
-        sum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsum(
-        n: usize,
-        sum_buffer: cl_mem,
-        sum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastScsum(
-        n: usize,
-        sum_buffer: cl_mem,
-        sum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDzsum(
-        n: usize,
-        sum_buffer: cl_mem,
-        sum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsum(
-        n: usize,
-        sum_buffer: cl_mem,
-        sum_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiSamax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiDamax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiCamax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiZamax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiHamax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiSamin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiDamin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiCamin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiZamin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiHamin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiSmax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiDmax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiCmax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiZmax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiHmax(
-        n: usize,
-        imax_buffer: cl_mem,
-        imax_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiSmin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiDmin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiCmin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiZmin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastiHmin(
-        n: usize,
-        imin_buffer: cl_mem,
-        imin_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSgemv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f32,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDgemv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f64,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgemv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_float2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgemv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_double2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHgemv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_half,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSgbmv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        kl: usize,
-        ku: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f32,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDgbmv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        kl: usize,
-        ku: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f64,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgbmv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        kl: usize,
-        ku: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_float2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgbmv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        kl: usize,
-        ku: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_double2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHgbmv(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        kl: usize,
-        ku: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_half,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastChemv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_float2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZhemv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_double2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastChbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        k: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_float2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZhbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        k: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_double2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastChpmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_float2,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_float2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZhpmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_double2,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_double2,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsymv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f32,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsymv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f64,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsymv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_half,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        k: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f32,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        k: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f64,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        k: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_half,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSspmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f32,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDspmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: f64,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHspmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_half,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        beta: cl_half,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStrmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtrmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtrmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtrmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHtrmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHtbmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStpmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtpmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtpmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtpmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHtpmv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStrsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtrsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtrsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtrsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStbsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtbsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtbsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtbsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        k: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStpsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtpsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtpsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtpsv(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        n: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSger(
-        layout: CLBlastLayout,
-        m: usize,
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDger(
-        layout: CLBlastLayout,
-        m: usize,
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHger(
-        layout: CLBlastLayout,
-        m: usize,
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgeru(
-        layout: CLBlastLayout,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgeru(
-        layout: CLBlastLayout,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgerc(
-        layout: CLBlastLayout,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgerc(
-        layout: CLBlastLayout,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCher(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZher(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastChpr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZhpr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCher2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_float2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZher2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_double2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastChpr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_float2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZhpr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_double2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsyr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsyr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsyr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSspr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDspr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHspr(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsyr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsyr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsyr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSspr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDspr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHspr2(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        ap_buffer: cl_mem,
-        ap_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSgemm(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDgemm(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgemm(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_float2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgemm(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_double2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHgemm(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_half,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsymm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        m: usize,
-        n: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsymm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        m: usize,
-        n: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCsymm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_float2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZsymm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_double2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsymm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        m: usize,
-        n: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_half,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastChemm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_float2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZhemm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_double2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsyrk(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsyrk(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCsyrk(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        beta: cl_float2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZsyrk(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        beta: cl_double2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsyrk(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        beta: cl_half,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCherk(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZherk(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSsyr2k(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        ab_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDsyr2k(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        ab_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCsyr2k(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        ab_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_float2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZsyr2k(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        ab_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_double2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHsyr2k(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        ab_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_half,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCher2k(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        ab_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZher2k(
-        layout: CLBlastLayout,
-        triangle: CLBlastTriangle,
-        ab_transpose: CLBlastTranspose,
-        n: usize,
-        k: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStrmm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtrmm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtrmm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtrmm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHtrmm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastStrsm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDtrsm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCtrsm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZtrsm(
-        layout: CLBlastLayout,
-        side: CLBlastSide,
-        triangle: CLBlastTriangle,
-        a_transpose: CLBlastTranspose,
-        diagonal: CLBlastDiagonal,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastShad(
-        n: usize,
-        alpha: f32,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        beta: f32,
-        z_buffer: cl_mem,
-        z_offset: usize,
-        z_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDhad(
-        n: usize,
-        alpha: f64,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        beta: f64,
-        z_buffer: cl_mem,
-        z_offset: usize,
-        z_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastChad(
-        n: usize,
-        alpha: cl_float2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        beta: cl_float2,
-        z_buffer: cl_mem,
-        z_offset: usize,
-        z_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZhad(
-        n: usize,
-        alpha: cl_double2,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        beta: cl_double2,
-        z_buffer: cl_mem,
-        z_offset: usize,
-        z_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHhad(
-        n: usize,
-        alpha: cl_half,
-        x_buffer: cl_mem,
-        x_offset: usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offset: usize,
-        y_inc: usize,
-        beta: cl_half,
-        z_buffer: cl_mem,
-        z_offset: usize,
-        z_inc: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSomatcopy(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDomatcopy(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastComatcopy(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZomatcopy(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHomatcopy(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSim2col(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDim2col(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCim2col(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZim2col(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHim2col(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastScol2im(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDcol2im(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCcol2im(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZcol2im(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHcol2im(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        col_buffer: cl_mem,
-        col_offset: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSconvgemm(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        num_kernels: usize,
-        batch_count: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        kernel_buffer: cl_mem,
-        kernel_offset: usize,
-        result_buffer: cl_mem,
-        result_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDconvgemm(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        num_kernels: usize,
-        batch_count: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        kernel_buffer: cl_mem,
-        kernel_offset: usize,
-        result_buffer: cl_mem,
-        result_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHconvgemm(
-        kernel_mode: CLBlastKernelMode,
-        channels: usize,
-        height: usize,
-        width: usize,
-        kernel_h: usize,
-        kernel_w: usize,
-        pad_h: usize,
-        pad_w: usize,
-        stride_h: usize,
-        stride_w: usize,
-        dilation_h: usize,
-        dilation_w: usize,
-        num_kernels: usize,
-        batch_count: usize,
-        im_buffer: cl_mem,
-        im_offset: usize,
-        kernel_buffer: cl_mem,
-        kernel_offset: usize,
-        result_buffer: cl_mem,
-        result_offset: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSaxpyBatched(
-        n: usize,
-        alphas: *const f32,
-        x_buffer: cl_mem,
-        x_offsets: *const usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offsets: *const usize,
-        y_inc: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDaxpyBatched(
-        n: usize,
-        alphas: *const f64,
-        x_buffer: cl_mem,
-        x_offsets: *const usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offsets: *const usize,
-        y_inc: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCaxpyBatched(
-        n: usize,
-        alphas: *const cl_float2,
-        x_buffer: cl_mem,
-        x_offsets: *const usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offsets: *const usize,
-        y_inc: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZaxpyBatched(
-        n: usize,
-        alphas: *const cl_double2,
-        x_buffer: cl_mem,
-        x_offsets: *const usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offsets: *const usize,
-        y_inc: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHaxpyBatched(
-        n: usize,
-        alphas: *const cl_half,
-        x_buffer: cl_mem,
-        x_offsets: *const usize,
-        x_inc: usize,
-        y_buffer: cl_mem,
-        y_offsets: *const usize,
-        y_inc: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSgemmBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alphas: *const f32,
-        a_buffer: cl_mem,
-        a_offsets: *const usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offsets: *const usize,
-        b_ld: usize,
-        betas: *const f32,
-        c_buffer: cl_mem,
-        c_offsets: *const usize,
-        c_ld: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDgemmBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alphas: *const f64,
-        a_buffer: cl_mem,
-        a_offsets: *const usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offsets: *const usize,
-        b_ld: usize,
-        betas: *const f64,
-        c_buffer: cl_mem,
-        c_offsets: *const usize,
-        c_ld: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgemmBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alphas: *const cl_float2,
-        a_buffer: cl_mem,
-        a_offsets: *const usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offsets: *const usize,
-        b_ld: usize,
-        betas: *const cl_float2,
-        c_buffer: cl_mem,
-        c_offsets: *const usize,
-        c_ld: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgemmBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alphas: *const cl_double2,
-        a_buffer: cl_mem,
-        a_offsets: *const usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offsets: *const usize,
-        b_ld: usize,
-        betas: *const cl_double2,
-        c_buffer: cl_mem,
-        c_offsets: *const usize,
-        c_ld: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHgemmBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alphas: *const cl_half,
-        a_buffer: cl_mem,
-        a_offsets: *const usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offsets: *const usize,
-        b_ld: usize,
-        betas: *const cl_half,
-        c_buffer: cl_mem,
-        c_offsets: *const usize,
-        c_ld: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSgemmStridedBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        a_stride: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        b_stride: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        c_stride: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDgemmStridedBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        a_stride: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        b_stride: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        c_stride: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgemmStridedBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        a_stride: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        b_stride: usize,
-        beta: cl_float2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        c_stride: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgemmStridedBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        a_stride: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        b_stride: usize,
-        beta: cl_double2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        c_stride: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHgemmStridedBatched(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        a_stride: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        b_stride: usize,
-        beta: cl_half,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        c_stride: usize,
-        batch_count: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSgemmWithTempBuffer(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: f32,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f32,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-        temp_buffer: cl_mem,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDgemmWithTempBuffer(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: f64,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: f64,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-        temp_buffer: cl_mem,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCgemmWithTempBuffer(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_float2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_float2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-        temp_buffer: cl_mem,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZgemmWithTempBuffer(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_double2,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_double2,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-        temp_buffer: cl_mem,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHgemmWithTempBuffer(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        alpha: cl_half,
-        a_buffer: cl_mem,
-        a_offset: usize,
-        a_ld: usize,
-        b_buffer: cl_mem,
-        b_offset: usize,
-        b_ld: usize,
-        beta: cl_half,
-        c_buffer: cl_mem,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        event: *mut cl_event,
-        temp_buffer: cl_mem,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastSGemmTempBufferSize(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        a_offset: usize,
-        a_ld: usize,
-        b_offset: usize,
-        b_ld: usize,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        temp_buffer_size: *mut usize,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastDGemmTempBufferSize(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        a_offset: usize,
-        a_ld: usize,
-        b_offset: usize,
-        b_ld: usize,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        temp_buffer_size: *mut usize,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastCGemmTempBufferSize(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        a_offset: usize,
-        a_ld: usize,
-        b_offset: usize,
-        b_ld: usize,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        temp_buffer_size: *mut usize,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastZGemmTempBufferSize(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        a_offset: usize,
-        a_ld: usize,
-        b_offset: usize,
-        b_ld: usize,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        temp_buffer_size: *mut usize,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastHGemmTempBufferSize(
-        layout: CLBlastLayout,
-        a_transpose: CLBlastTranspose,
-        b_transpose: CLBlastTranspose,
-        m: usize,
-        n: usize,
-        k: usize,
-        a_offset: usize,
-        a_ld: usize,
-        b_offset: usize,
-        b_ld: usize,
-        c_offset: usize,
-        c_ld: usize,
-        queue: *mut cl_command_queue,
-        temp_buffer_size: *mut usize,
-    ) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastClearCache() -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastFillCache(device: cl_device_id) -> CLBlastStatusCode;
-}
-unsafe extern "C" {
-    pub fn CLBlastOverrideParameters(
-        device: cl_device_id,
-        kernel_name: *const ::std::os::raw::c_char,
-        precision: CLBlastPrecision,
-        num_parameters: usize,
-        parameters_names: *mut *const ::std::os::raw::c_char,
-        parameters_values: *const usize,
-    ) -> CLBlastStatusCode;
+  pub fn CLBlastSrotg(
+    sa_buffer: cl_mem,
+    sa_offset: usize,
+    sb_buffer: cl_mem,
+    sb_offset: usize,
+    sc_buffer: cl_mem,
+    sc_offset: usize,
+    ss_buffer: cl_mem,
+    ss_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDrotg(
+    sa_buffer: cl_mem,
+    sa_offset: usize,
+    sb_buffer: cl_mem,
+    sb_offset: usize,
+    sc_buffer: cl_mem,
+    sc_offset: usize,
+    ss_buffer: cl_mem,
+    ss_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSrotmg(
+    sd1_buffer: cl_mem,
+    sd1_offset: usize,
+    sd2_buffer: cl_mem,
+    sd2_offset: usize,
+    sx1_buffer: cl_mem,
+    sx1_offset: usize,
+    sy1_buffer: cl_mem,
+    sy1_offset: usize,
+    sparam_buffer: cl_mem,
+    sparam_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDrotmg(
+    sd1_buffer: cl_mem,
+    sd1_offset: usize,
+    sd2_buffer: cl_mem,
+    sd2_offset: usize,
+    sx1_buffer: cl_mem,
+    sx1_offset: usize,
+    sy1_buffer: cl_mem,
+    sy1_offset: usize,
+    sparam_buffer: cl_mem,
+    sparam_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSrot(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    cos: f32,
+    sin: f32,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDrot(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    cos: f64,
+    sin: f64,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSrotm(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    sparam_buffer: cl_mem,
+    sparam_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDrotm(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    sparam_buffer: cl_mem,
+    sparam_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSswap(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDswap(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCswap(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZswap(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHswap(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSscal(
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDscal(
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCscal(
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZscal(
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHscal(
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastScopy(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDcopy(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCcopy(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZcopy(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHcopy(
+    n: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSaxpy(
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDaxpy(
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCaxpy(
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZaxpy(
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHaxpy(
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSdot(
+    n: usize,
+    dot_buffer: cl_mem,
+    dot_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDdot(
+    n: usize,
+    dot_buffer: cl_mem,
+    dot_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHdot(
+    n: usize,
+    dot_buffer: cl_mem,
+    dot_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCdotu(
+    n: usize,
+    dot_buffer: cl_mem,
+    dot_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZdotu(
+    n: usize,
+    dot_buffer: cl_mem,
+    dot_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCdotc(
+    n: usize,
+    dot_buffer: cl_mem,
+    dot_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZdotc(
+    n: usize,
+    dot_buffer: cl_mem,
+    dot_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSnrm2(
+    n: usize,
+    nrm2_buffer: cl_mem,
+    nrm2_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDnrm2(
+    n: usize,
+    nrm2_buffer: cl_mem,
+    nrm2_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastScnrm2(
+    n: usize,
+    nrm2_buffer: cl_mem,
+    nrm2_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDznrm2(
+    n: usize,
+    nrm2_buffer: cl_mem,
+    nrm2_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHnrm2(
+    n: usize,
+    nrm2_buffer: cl_mem,
+    nrm2_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSasum(
+    n: usize,
+    asum_buffer: cl_mem,
+    asum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDasum(
+    n: usize,
+    asum_buffer: cl_mem,
+    asum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastScasum(
+    n: usize,
+    asum_buffer: cl_mem,
+    asum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDzasum(
+    n: usize,
+    asum_buffer: cl_mem,
+    asum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHasum(
+    n: usize,
+    asum_buffer: cl_mem,
+    asum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsum(
+    n: usize,
+    sum_buffer: cl_mem,
+    sum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsum(
+    n: usize,
+    sum_buffer: cl_mem,
+    sum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastScsum(
+    n: usize,
+    sum_buffer: cl_mem,
+    sum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDzsum(
+    n: usize,
+    sum_buffer: cl_mem,
+    sum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsum(
+    n: usize,
+    sum_buffer: cl_mem,
+    sum_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiSamax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiDamax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiCamax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiZamax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiHamax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiSamin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiDamin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiCamin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiZamin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiHamin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiSmax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiDmax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiCmax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiZmax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiHmax(
+    n: usize,
+    imax_buffer: cl_mem,
+    imax_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiSmin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiDmin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiCmin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiZmin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastiHmin(
+    n: usize,
+    imin_buffer: cl_mem,
+    imin_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSgemv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDgemv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgemv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgemv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHgemv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSgbmv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDgbmv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgbmv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgbmv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHgbmv(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastChemv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZhemv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastChbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZhbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastChpmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZhpmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsymv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsymv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsymv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSspmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDspmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHspmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStrmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtrmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtrmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtrmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHtrmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHtbmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStpmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtpmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtpmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtpmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHtpmv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStrsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtrsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtrsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtrsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStbsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtbsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtbsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtbsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStpsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtpsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtpsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtpsv(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSger(
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDger(
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHger(
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgeru(
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgeru(
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgerc(
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgerc(
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCher(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZher(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastChpr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZhpr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCher2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZher2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastChpr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZhpr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsyr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsyr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsyr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSspr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDspr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHspr(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsyr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsyr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsyr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSspr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDspr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHspr2(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: cl_mem,
+    ap_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSgemm(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDgemm(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgemm(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgemm(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHgemm(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsymm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsymm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCsymm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZsymm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsymm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastChemm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZhemm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsyrk(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsyrk(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCsyrk(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    beta: cl_float2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZsyrk(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    beta: cl_double2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsyrk(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    beta: cl_half,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCherk(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZherk(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSsyr2k(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDsyr2k(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCsyr2k(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZsyr2k(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHsyr2k(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCher2k(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZher2k(
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStrmm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtrmm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtrmm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtrmm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHtrmm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastStrsm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDtrsm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCtrsm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZtrsm(
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastShad(
+    n: usize,
+    alpha: f32,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    beta: f32,
+    z_buffer: cl_mem,
+    z_offset: usize,
+    z_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDhad(
+    n: usize,
+    alpha: f64,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    beta: f64,
+    z_buffer: cl_mem,
+    z_offset: usize,
+    z_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastChad(
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    beta: cl_float2,
+    z_buffer: cl_mem,
+    z_offset: usize,
+    z_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZhad(
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    beta: cl_double2,
+    z_buffer: cl_mem,
+    z_offset: usize,
+    z_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHhad(
+    n: usize,
+    alpha: cl_half,
+    x_buffer: cl_mem,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offset: usize,
+    y_inc: usize,
+    beta: cl_half,
+    z_buffer: cl_mem,
+    z_offset: usize,
+    z_inc: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSomatcopy(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDomatcopy(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastComatcopy(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZomatcopy(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHomatcopy(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSim2col(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDim2col(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCim2col(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZim2col(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHim2col(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastScol2im(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDcol2im(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCcol2im(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZcol2im(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHcol2im(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: cl_mem,
+    col_offset: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSconvgemm(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    num_kernels: usize,
+    batch_count: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    kernel_buffer: cl_mem,
+    kernel_offset: usize,
+    result_buffer: cl_mem,
+    result_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDconvgemm(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    num_kernels: usize,
+    batch_count: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    kernel_buffer: cl_mem,
+    kernel_offset: usize,
+    result_buffer: cl_mem,
+    result_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHconvgemm(
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    num_kernels: usize,
+    batch_count: usize,
+    im_buffer: cl_mem,
+    im_offset: usize,
+    kernel_buffer: cl_mem,
+    kernel_offset: usize,
+    result_buffer: cl_mem,
+    result_offset: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSaxpyBatched(
+    n: usize,
+    alphas: *const f32,
+    x_buffer: cl_mem,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDaxpyBatched(
+    n: usize,
+    alphas: *const f64,
+    x_buffer: cl_mem,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCaxpyBatched(
+    n: usize,
+    alphas: *const cl_float2,
+    x_buffer: cl_mem,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZaxpyBatched(
+    n: usize,
+    alphas: *const cl_double2,
+    x_buffer: cl_mem,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHaxpyBatched(
+    n: usize,
+    alphas: *const cl_half,
+    x_buffer: cl_mem,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: cl_mem,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSgemmBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const f32,
+    a_buffer: cl_mem,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const f32,
+    c_buffer: cl_mem,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDgemmBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const f64,
+    a_buffer: cl_mem,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const f64,
+    c_buffer: cl_mem,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgemmBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const cl_float2,
+    a_buffer: cl_mem,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const cl_float2,
+    c_buffer: cl_mem,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgemmBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const cl_double2,
+    a_buffer: cl_mem,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const cl_double2,
+    c_buffer: cl_mem,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHgemmBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const cl_half,
+    a_buffer: cl_mem,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const cl_half,
+    c_buffer: cl_mem,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSgemmStridedBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDgemmStridedBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgemmStridedBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: cl_float2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgemmStridedBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: cl_double2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHgemmStridedBatched(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: cl_half,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSgemmWithTempBuffer(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: cl_mem,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDgemmWithTempBuffer(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: cl_mem,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCgemmWithTempBuffer(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: cl_mem,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZgemmWithTempBuffer(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: cl_mem,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHgemmWithTempBuffer(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: cl_mem,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: cl_mem,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: cl_mem,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: cl_mem,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastSGemmTempBufferSize(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastDGemmTempBufferSize(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastCGemmTempBufferSize(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastZGemmTempBufferSize(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastHGemmTempBufferSize(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+  ) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastClearCache() -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastFillCache(device: cl_device_id) -> CLBlastStatusCode;
+}
+unsafe extern "C" {
+  pub fn CLBlastOverrideParameters(
+    device: cl_device_id,
+    kernel_name: *const ::std::os::raw::c_char,
+    precision: CLBlastPrecision,
+    num_parameters: usize,
+    parameters_names: *mut *const ::std::os::raw::c_char,
+    parameters_values: *const usize,
+  ) -> CLBlastStatusCode;
 }

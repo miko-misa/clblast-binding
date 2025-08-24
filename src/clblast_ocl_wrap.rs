@@ -1,0 +1,11392 @@
+use crate::clblast_sys as sys;
+use ocl::core as ocore;
+use ocl::{Buffer, Queue};
+pub use ocore::Event as CoreEvent;
+use sys::*;
+#[inline]
+pub fn with_queue_ptr<R>(queue: &Queue, f: impl FnOnce(*mut cl_command_queue) -> R) -> R {
+    let raw_cq_sys = queue.as_core().as_ptr();
+    let mut cq_bindgen: cl_command_queue = raw_cq_sys as *mut _;
+    let cq_ptr: *mut cl_command_queue = &mut cq_bindgen as *mut _;
+    f(cq_ptr)
+}
+#[inline]
+fn to_mem<T: ocl::OclPrm>(buf: &Buffer<T>) -> sys::cl_mem {
+    buf.as_core().as_ptr() as sys::cl_mem
+}
+#[inline]
+pub fn enqueue_marker_wait<'a>(
+    queue: &ocl::Queue,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>> {
+    if wait_for.is_empty() {
+        return Ok(None);
+    }
+    unsafe {
+        let cq = queue.as_core().as_ptr();
+        let mut raw_events: Vec<cl_sys::cl_event> = Vec::with_capacity(wait_for.len());
+        for e in wait_for {
+            let ptr_ref = e.as_ptr_ref();
+            raw_events.push(*ptr_ref);
+        }
+        let mut marker: cl_sys::cl_event = std::ptr::null_mut();
+        let err = cl_sys::clEnqueueMarkerWithWaitList(
+            cq,
+            raw_events.len() as u32,
+            raw_events.as_ptr(),
+            &mut marker as *mut _,
+        );
+        if err != cl_sys::CL_SUCCESS as i32 {
+            return Err(ocl::Error::from(format!(
+                "clEnqueueMarkerWithWaitList failed: {}",
+                err
+            )));
+        }
+        let ev = ocore::types::abs::Event::from_raw_create_ptr(marker);
+        Ok(Some(ev))
+    }
+}
+#[inline]
+fn clblast_ok(code: sys::CLBlastStatusCode) -> bool {
+    (code as i32) == 0
+}
+#[inline]
+unsafe fn wrap_new_event(raw: sys::cl_event) -> Option<CoreEvent> {
+    if raw.is_null() {
+        None
+    } else {
+        let raw_sys = raw as cl_sys::cl_event;
+        Some(ocore::types::abs::Event::from_raw_create_ptr(raw_sys))
+    }
+}
+pub mod consts {}
+#[allow(clippy::too_many_arguments)]
+pub fn srotg<T1, T2, T3, T4>(
+    queue: &ocl::Queue,
+    sa_buffer: &ocl::Buffer<T1>,
+    sa_offset: usize,
+    sb_buffer: &ocl::Buffer<T2>,
+    sb_offset: usize,
+    sc_buffer: &ocl::Buffer<T3>,
+    sc_offset: usize,
+    ss_buffer: &ocl::Buffer<T4>,
+    ss_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSrotg(
+            to_mem(sa_buffer),
+            sa_offset,
+            to_mem(sb_buffer),
+            sb_offset,
+            to_mem(sc_buffer),
+            sc_offset,
+            to_mem(ss_buffer),
+            ss_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSrotg), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn drotg<T1, T2, T3, T4>(
+    queue: &ocl::Queue,
+    sa_buffer: &ocl::Buffer<T1>,
+    sa_offset: usize,
+    sb_buffer: &ocl::Buffer<T2>,
+    sb_offset: usize,
+    sc_buffer: &ocl::Buffer<T3>,
+    sc_offset: usize,
+    ss_buffer: &ocl::Buffer<T4>,
+    ss_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDrotg(
+            to_mem(sa_buffer),
+            sa_offset,
+            to_mem(sb_buffer),
+            sb_offset,
+            to_mem(sc_buffer),
+            sc_offset,
+            to_mem(ss_buffer),
+            ss_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDrotg), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn srotmg<T1, T2, T3, T4, T5>(
+    queue: &ocl::Queue,
+    sd1_buffer: &ocl::Buffer<T1>,
+    sd1_offset: usize,
+    sd2_buffer: &ocl::Buffer<T2>,
+    sd2_offset: usize,
+    sx1_buffer: &ocl::Buffer<T3>,
+    sx1_offset: usize,
+    sy1_buffer: &ocl::Buffer<T4>,
+    sy1_offset: usize,
+    sparam_buffer: &ocl::Buffer<T5>,
+    sparam_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+    T5: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSrotmg(
+            to_mem(sd1_buffer),
+            sd1_offset,
+            to_mem(sd2_buffer),
+            sd2_offset,
+            to_mem(sx1_buffer),
+            sx1_offset,
+            to_mem(sy1_buffer),
+            sy1_offset,
+            to_mem(sparam_buffer),
+            sparam_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSrotmg), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn drotmg<T1, T2, T3, T4, T5>(
+    queue: &ocl::Queue,
+    sd1_buffer: &ocl::Buffer<T1>,
+    sd1_offset: usize,
+    sd2_buffer: &ocl::Buffer<T2>,
+    sd2_offset: usize,
+    sx1_buffer: &ocl::Buffer<T3>,
+    sx1_offset: usize,
+    sy1_buffer: &ocl::Buffer<T4>,
+    sy1_offset: usize,
+    sparam_buffer: &ocl::Buffer<T5>,
+    sparam_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+    T5: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDrotmg(
+            to_mem(sd1_buffer),
+            sd1_offset,
+            to_mem(sd2_buffer),
+            sd2_offset,
+            to_mem(sx1_buffer),
+            sx1_offset,
+            to_mem(sy1_buffer),
+            sy1_offset,
+            to_mem(sparam_buffer),
+            sparam_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDrotmg), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn srot<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    cos: f32,
+    sin: f32,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSrot(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            cos,
+            sin,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSrot), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn drot<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    cos: f64,
+    sin: f64,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDrot(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            cos,
+            sin,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDrot), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn srotm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    sparam_buffer: &ocl::Buffer<T3>,
+    sparam_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSrotm(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(sparam_buffer),
+            sparam_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSrotm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn drotm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    sparam_buffer: &ocl::Buffer<T3>,
+    sparam_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDrotm(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(sparam_buffer),
+            sparam_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDrotm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sswap<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSswap(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSswap), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dswap<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDswap(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDswap), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cswap<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCswap(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCswap), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zswap<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZswap(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZswap), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hswap<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHswap(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHswap), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sscal<T1>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSscal(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSscal), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dscal<T1>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDscal(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDscal), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cscal<T1>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCscal(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCscal), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zscal<T1>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZscal(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZscal), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hscal<T1>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHscal(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHscal), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn scopy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastScopy(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastScopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dcopy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDcopy(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ccopy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCcopy(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zcopy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZcopy(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hcopy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHcopy(
+            n,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn saxpy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSaxpy(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSaxpy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn daxpy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDaxpy(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDaxpy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn caxpy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCaxpy(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCaxpy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zaxpy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZaxpy(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZaxpy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn haxpy<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHaxpy(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHaxpy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sdot<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    dot_buffer: &ocl::Buffer<T1>,
+    dot_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSdot(
+            n,
+            to_mem(dot_buffer),
+            dot_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSdot), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ddot<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    dot_buffer: &ocl::Buffer<T1>,
+    dot_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDdot(
+            n,
+            to_mem(dot_buffer),
+            dot_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDdot), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hdot<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    dot_buffer: &ocl::Buffer<T1>,
+    dot_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHdot(
+            n,
+            to_mem(dot_buffer),
+            dot_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHdot), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cdotu<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    dot_buffer: &ocl::Buffer<T1>,
+    dot_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCdotu(
+            n,
+            to_mem(dot_buffer),
+            dot_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCdotu), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zdotu<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    dot_buffer: &ocl::Buffer<T1>,
+    dot_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZdotu(
+            n,
+            to_mem(dot_buffer),
+            dot_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZdotu), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cdotc<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    dot_buffer: &ocl::Buffer<T1>,
+    dot_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCdotc(
+            n,
+            to_mem(dot_buffer),
+            dot_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCdotc), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zdotc<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    dot_buffer: &ocl::Buffer<T1>,
+    dot_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZdotc(
+            n,
+            to_mem(dot_buffer),
+            dot_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZdotc), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn snrm2<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    nrm2_buffer: &ocl::Buffer<T1>,
+    nrm2_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSnrm2(
+            n,
+            to_mem(nrm2_buffer),
+            nrm2_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSnrm2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dnrm2<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    nrm2_buffer: &ocl::Buffer<T1>,
+    nrm2_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDnrm2(
+            n,
+            to_mem(nrm2_buffer),
+            nrm2_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDnrm2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn scnrm2<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    nrm2_buffer: &ocl::Buffer<T1>,
+    nrm2_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastScnrm2(
+            n,
+            to_mem(nrm2_buffer),
+            nrm2_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastScnrm2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dznrm2<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    nrm2_buffer: &ocl::Buffer<T1>,
+    nrm2_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDznrm2(
+            n,
+            to_mem(nrm2_buffer),
+            nrm2_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDznrm2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hnrm2<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    nrm2_buffer: &ocl::Buffer<T1>,
+    nrm2_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHnrm2(
+            n,
+            to_mem(nrm2_buffer),
+            nrm2_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHnrm2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sasum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    asum_buffer: &ocl::Buffer<T1>,
+    asum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSasum(
+            n,
+            to_mem(asum_buffer),
+            asum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSasum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dasum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    asum_buffer: &ocl::Buffer<T1>,
+    asum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDasum(
+            n,
+            to_mem(asum_buffer),
+            asum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDasum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn scasum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    asum_buffer: &ocl::Buffer<T1>,
+    asum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastScasum(
+            n,
+            to_mem(asum_buffer),
+            asum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastScasum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dzasum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    asum_buffer: &ocl::Buffer<T1>,
+    asum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDzasum(
+            n,
+            to_mem(asum_buffer),
+            asum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDzasum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hasum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    asum_buffer: &ocl::Buffer<T1>,
+    asum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHasum(
+            n,
+            to_mem(asum_buffer),
+            asum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHasum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    sum_buffer: &ocl::Buffer<T1>,
+    sum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsum(
+            n,
+            to_mem(sum_buffer),
+            sum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    sum_buffer: &ocl::Buffer<T1>,
+    sum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsum(
+            n,
+            to_mem(sum_buffer),
+            sum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn scsum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    sum_buffer: &ocl::Buffer<T1>,
+    sum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastScsum(
+            n,
+            to_mem(sum_buffer),
+            sum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastScsum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dzsum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    sum_buffer: &ocl::Buffer<T1>,
+    sum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDzsum(
+            n,
+            to_mem(sum_buffer),
+            sum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDzsum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsum<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    sum_buffer: &ocl::Buffer<T1>,
+    sum_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsum(
+            n,
+            to_mem(sum_buffer),
+            sum_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsum), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_samax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiSamax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiSamax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_damax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiDamax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiDamax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_camax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiCamax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiCamax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_zamax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiZamax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiZamax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_hamax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiHamax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiHamax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_samin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiSamin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiSamin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_damin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiDamin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiDamin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_camin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiCamin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiCamin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_zamin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiZamin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiZamin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_hamin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiHamin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiHamin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_smax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiSmax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiSmax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_dmax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiDmax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiDmax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_cmax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiCmax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiCmax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_zmax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiZmax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiZmax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_hmax<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imax_buffer: &ocl::Buffer<T1>,
+    imax_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiHmax(
+            n,
+            to_mem(imax_buffer),
+            imax_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiHmax), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_smin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiSmin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiSmin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_dmin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiDmin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiDmin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_cmin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiCmin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiCmin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_zmin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiZmin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiZmin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn i_hmin<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    imin_buffer: &ocl::Buffer<T1>,
+    imin_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastiHmin(
+            n,
+            to_mem(imin_buffer),
+            imin_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastiHmin), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sgemv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSgemv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSgemv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dgemv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDgemv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDgemv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgemv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCgemv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgemv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgemv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZgemv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgemv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hgemv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHgemv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHgemv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sgbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSgbmv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            kl,
+            ku,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSgbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dgbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDgbmv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            kl,
+            ku,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDgbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCgbmv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            kl,
+            ku,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZgbmv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            kl,
+            ku,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hgbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    kl: usize,
+    ku: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHgbmv(
+            layout,
+            a_transpose,
+            m,
+            n,
+            kl,
+            ku,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHgbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn chemv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastChemv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastChemv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zhemv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZhemv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZhemv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn chbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastChbmv(
+            layout,
+            triangle,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastChbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zhbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZhbmv(
+            layout,
+            triangle,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZhbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn chpmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_float2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastChpmv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastChpmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zhpmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_double2,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZhpmv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZhpmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssymv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsymv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsymv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsymv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsymv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsymv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsymv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsymv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsymv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsbmv(
+            layout,
+            triangle,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsbmv(
+            layout,
+            triangle,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsbmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsbmv(
+            layout,
+            triangle,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sspmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f32,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSspmv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSspmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dspmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: f64,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDspmv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDspmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hspmv<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    beta: cl_half,
+    y_buffer: &ocl::Buffer<T3>,
+    y_offset: usize,
+    y_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHspmv(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            beta,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHspmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn strmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStrmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStrmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtrmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtrmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtrmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctrmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtrmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtrmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztrmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtrmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtrmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn htrmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHtrmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHtrmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn stbmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStbmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtbmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtbmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctbmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtbmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztbmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtbmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn htbmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHtbmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHtbmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn stpmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStpmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStpmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtpmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtpmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtpmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctpmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtpmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtpmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztpmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtpmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtpmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn htpmv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHtpmv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHtpmv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn strsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStrsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStrsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtrsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtrsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtrsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctrsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtrsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtrsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztrsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtrsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtrsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn stbsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStbsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStbsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtbsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtbsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtbsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctbsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtbsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtbsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztbsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    k: usize,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtbsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            k,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtbsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn stpsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStpsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStpsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtpsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtpsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtpsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctpsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtpsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtpsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztpsv<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    n: usize,
+    ap_buffer: &ocl::Buffer<T1>,
+    ap_offset: usize,
+    x_buffer: &ocl::Buffer<T2>,
+    x_offset: usize,
+    x_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtpsv(
+            layout,
+            triangle,
+            a_transpose,
+            diagonal,
+            n,
+            to_mem(ap_buffer),
+            ap_offset,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtpsv), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sger<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSger(
+            layout,
+            m,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSger), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dger<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDger(
+            layout,
+            m,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDger), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hger<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHger(
+            layout,
+            m,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHger), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgeru<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCgeru(
+            layout,
+            m,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgeru), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgeru<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZgeru(
+            layout,
+            m,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgeru), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgerc<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCgerc(
+            layout,
+            m,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgerc), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgerc<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZgerc(
+            layout,
+            m,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgerc), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cher<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: &ocl::Buffer<T2>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCher(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCher), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zher<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: &ocl::Buffer<T2>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZher(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZher), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn chpr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: &ocl::Buffer<T2>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastChpr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastChpr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zhpr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: &ocl::Buffer<T2>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZhpr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZhpr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cher2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCher2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCher2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zher2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZher2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZher2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn chpr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: &ocl::Buffer<T3>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastChpr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastChpr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zhpr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: &ocl::Buffer<T3>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZhpr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZhpr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssyr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: &ocl::Buffer<T2>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsyr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsyr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsyr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: &ocl::Buffer<T2>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsyr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsyr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsyr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    a_buffer: &ocl::Buffer<T2>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsyr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsyr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sspr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: &ocl::Buffer<T2>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSspr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSspr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dspr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: &ocl::Buffer<T2>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDspr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDspr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hspr<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    ap_buffer: &ocl::Buffer<T2>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHspr(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHspr), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssyr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsyr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsyr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsyr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsyr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsyr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsyr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    a_buffer: &ocl::Buffer<T3>,
+    a_offset: usize,
+    a_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsyr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsyr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sspr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: &ocl::Buffer<T3>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSspr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSspr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dspr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: &ocl::Buffer<T3>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDspr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDspr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hspr2<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    ap_buffer: &ocl::Buffer<T3>,
+    ap_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHspr2(
+            layout,
+            triangle,
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            to_mem(ap_buffer),
+            ap_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHspr2), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSgemm(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDgemm(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCgemm(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZgemm(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHgemm(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssymm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsymm(
+            layout,
+            side,
+            triangle,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsymm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsymm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsymm(
+            layout,
+            side,
+            triangle,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsymm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn csymm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCsymm(
+            layout,
+            side,
+            triangle,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCsymm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zsymm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZsymm(
+            layout,
+            side,
+            triangle,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZsymm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsymm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsymm(
+            layout,
+            side,
+            triangle,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsymm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn chemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastChemm(
+            layout,
+            side,
+            triangle,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastChemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zhemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZhemm(
+            layout,
+            side,
+            triangle,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZhemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssyrk<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T2>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsyrk(
+            layout,
+            triangle,
+            a_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsyrk), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsyrk<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T2>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsyrk(
+            layout,
+            triangle,
+            a_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsyrk), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn csyrk<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    beta: cl_float2,
+    c_buffer: &ocl::Buffer<T2>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCsyrk(
+            layout,
+            triangle,
+            a_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCsyrk), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zsyrk<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    beta: cl_double2,
+    c_buffer: &ocl::Buffer<T2>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZsyrk(
+            layout,
+            triangle,
+            a_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZsyrk), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsyrk<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    beta: cl_half,
+    c_buffer: &ocl::Buffer<T2>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsyrk(
+            layout,
+            triangle,
+            a_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsyrk), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cherk<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T2>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCherk(
+            layout,
+            triangle,
+            a_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCherk), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zherk<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T2>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZherk(
+            layout,
+            triangle,
+            a_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZherk), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ssyr2k<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSsyr2k(
+            layout,
+            triangle,
+            ab_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSsyr2k), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dsyr2k<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDsyr2k(
+            layout,
+            triangle,
+            ab_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDsyr2k), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn csyr2k<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCsyr2k(
+            layout,
+            triangle,
+            ab_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCsyr2k), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zsyr2k<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZsyr2k(
+            layout,
+            triangle,
+            ab_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZsyr2k), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hsyr2k<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHsyr2k(
+            layout,
+            triangle,
+            ab_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHsyr2k), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cher2k<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCher2k(
+            layout,
+            triangle,
+            ab_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCher2k), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zher2k<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    triangle: CLBlastTriangle,
+    ab_transpose: CLBlastTranspose,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZher2k(
+            layout,
+            triangle,
+            ab_transpose,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZher2k), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn strmm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStrmm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStrmm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtrmm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtrmm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtrmm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctrmm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtrmm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtrmm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztrmm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtrmm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtrmm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn htrmm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHtrmm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHtrmm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn strsm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastStrsm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastStrsm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dtrsm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDtrsm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDtrsm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ctrsm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCtrsm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCtrsm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ztrsm<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    side: CLBlastSide,
+    triangle: CLBlastTriangle,
+    a_transpose: CLBlastTranspose,
+    diagonal: CLBlastDiagonal,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZtrsm(
+            layout,
+            side,
+            triangle,
+            a_transpose,
+            diagonal,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZtrsm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn shad<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    beta: f32,
+    z_buffer: &ocl::Buffer<T3>,
+    z_offset: usize,
+    z_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastShad(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            beta,
+            to_mem(z_buffer),
+            z_offset,
+            z_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastShad), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dhad<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    beta: f64,
+    z_buffer: &ocl::Buffer<T3>,
+    z_offset: usize,
+    z_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDhad(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            beta,
+            to_mem(z_buffer),
+            z_offset,
+            z_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDhad), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn chad<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    beta: cl_float2,
+    z_buffer: &ocl::Buffer<T3>,
+    z_offset: usize,
+    z_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastChad(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            beta,
+            to_mem(z_buffer),
+            z_offset,
+            z_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastChad), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zhad<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    beta: cl_double2,
+    z_buffer: &ocl::Buffer<T3>,
+    z_offset: usize,
+    z_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZhad(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            beta,
+            to_mem(z_buffer),
+            z_offset,
+            z_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZhad), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hhad<T1, T2, T3>(
+    queue: &ocl::Queue,
+    n: usize,
+    alpha: cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offset: usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offset: usize,
+    y_inc: usize,
+    beta: cl_half,
+    z_buffer: &ocl::Buffer<T3>,
+    z_offset: usize,
+    z_inc: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHhad(
+            n,
+            alpha,
+            to_mem(x_buffer),
+            x_offset,
+            x_inc,
+            to_mem(y_buffer),
+            y_offset,
+            y_inc,
+            beta,
+            to_mem(z_buffer),
+            z_offset,
+            z_inc,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHhad), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn somatcopy<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSomatcopy(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSomatcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn domatcopy<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDomatcopy(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDomatcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn comatcopy<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastComatcopy(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastComatcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zomatcopy<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZomatcopy(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZomatcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn homatcopy<T1, T2>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHomatcopy(
+            layout,
+            a_transpose,
+            m,
+            n,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHomatcopy), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sim2col<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    col_buffer: &ocl::Buffer<T2>,
+    col_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSim2col(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(col_buffer),
+            col_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSim2col), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dim2col<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    col_buffer: &ocl::Buffer<T2>,
+    col_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDim2col(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(col_buffer),
+            col_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDim2col), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cim2col<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    col_buffer: &ocl::Buffer<T2>,
+    col_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCim2col(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(col_buffer),
+            col_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCim2col), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zim2col<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    col_buffer: &ocl::Buffer<T2>,
+    col_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZim2col(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(col_buffer),
+            col_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZim2col), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn him2col<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    col_buffer: &ocl::Buffer<T2>,
+    col_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHim2col(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(col_buffer),
+            col_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHim2col), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn scol2im<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: &ocl::Buffer<T1>,
+    col_offset: usize,
+    im_buffer: &ocl::Buffer<T2>,
+    im_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastScol2im(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(col_buffer),
+            col_offset,
+            to_mem(im_buffer),
+            im_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastScol2im), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dcol2im<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: &ocl::Buffer<T1>,
+    col_offset: usize,
+    im_buffer: &ocl::Buffer<T2>,
+    im_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDcol2im(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(col_buffer),
+            col_offset,
+            to_mem(im_buffer),
+            im_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDcol2im), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn ccol2im<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: &ocl::Buffer<T1>,
+    col_offset: usize,
+    im_buffer: &ocl::Buffer<T2>,
+    im_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCcol2im(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(col_buffer),
+            col_offset,
+            to_mem(im_buffer),
+            im_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCcol2im), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zcol2im<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: &ocl::Buffer<T1>,
+    col_offset: usize,
+    im_buffer: &ocl::Buffer<T2>,
+    im_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZcol2im(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(col_buffer),
+            col_offset,
+            to_mem(im_buffer),
+            im_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZcol2im), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hcol2im<T1, T2>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    col_buffer: &ocl::Buffer<T1>,
+    col_offset: usize,
+    im_buffer: &ocl::Buffer<T2>,
+    im_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHcol2im(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            to_mem(col_buffer),
+            col_offset,
+            to_mem(im_buffer),
+            im_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHcol2im), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sconvgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    num_kernels: usize,
+    batch_count: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    kernel_buffer: &ocl::Buffer<T2>,
+    kernel_offset: usize,
+    result_buffer: &ocl::Buffer<T3>,
+    result_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSconvgemm(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            num_kernels,
+            batch_count,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(kernel_buffer),
+            kernel_offset,
+            to_mem(result_buffer),
+            result_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSconvgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dconvgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    num_kernels: usize,
+    batch_count: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    kernel_buffer: &ocl::Buffer<T2>,
+    kernel_offset: usize,
+    result_buffer: &ocl::Buffer<T3>,
+    result_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDconvgemm(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            num_kernels,
+            batch_count,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(kernel_buffer),
+            kernel_offset,
+            to_mem(result_buffer),
+            result_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDconvgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hconvgemm<T1, T2, T3>(
+    queue: &ocl::Queue,
+    kernel_mode: CLBlastKernelMode,
+    channels: usize,
+    height: usize,
+    width: usize,
+    kernel_h: usize,
+    kernel_w: usize,
+    pad_h: usize,
+    pad_w: usize,
+    stride_h: usize,
+    stride_w: usize,
+    dilation_h: usize,
+    dilation_w: usize,
+    num_kernels: usize,
+    batch_count: usize,
+    im_buffer: &ocl::Buffer<T1>,
+    im_offset: usize,
+    kernel_buffer: &ocl::Buffer<T2>,
+    kernel_offset: usize,
+    result_buffer: &ocl::Buffer<T3>,
+    result_offset: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHconvgemm(
+            kernel_mode,
+            channels,
+            height,
+            width,
+            kernel_h,
+            kernel_w,
+            pad_h,
+            pad_w,
+            stride_h,
+            stride_w,
+            dilation_h,
+            dilation_w,
+            num_kernels,
+            batch_count,
+            to_mem(im_buffer),
+            im_offset,
+            to_mem(kernel_buffer),
+            kernel_offset,
+            to_mem(result_buffer),
+            result_offset,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHconvgemm), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn saxpy_batched<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alphas: *const f32,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSaxpyBatched(
+            n,
+            alphas,
+            to_mem(x_buffer),
+            x_offsets,
+            x_inc,
+            to_mem(y_buffer),
+            y_offsets,
+            y_inc,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSaxpyBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn daxpy_batched<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alphas: *const f64,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDaxpyBatched(
+            n,
+            alphas,
+            to_mem(x_buffer),
+            x_offsets,
+            x_inc,
+            to_mem(y_buffer),
+            y_offsets,
+            y_inc,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDaxpyBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn caxpy_batched<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alphas: *const cl_float2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCaxpyBatched(
+            n,
+            alphas,
+            to_mem(x_buffer),
+            x_offsets,
+            x_inc,
+            to_mem(y_buffer),
+            y_offsets,
+            y_inc,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCaxpyBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zaxpy_batched<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alphas: *const cl_double2,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZaxpyBatched(
+            n,
+            alphas,
+            to_mem(x_buffer),
+            x_offsets,
+            x_inc,
+            to_mem(y_buffer),
+            y_offsets,
+            y_inc,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZaxpyBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn haxpy_batched<T1, T2>(
+    queue: &ocl::Queue,
+    n: usize,
+    alphas: *const cl_half,
+    x_buffer: &ocl::Buffer<T1>,
+    x_offsets: *const usize,
+    x_inc: usize,
+    y_buffer: &ocl::Buffer<T2>,
+    y_offsets: *const usize,
+    y_inc: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHaxpyBatched(
+            n,
+            alphas,
+            to_mem(x_buffer),
+            x_offsets,
+            x_inc,
+            to_mem(y_buffer),
+            y_offsets,
+            y_inc,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHaxpyBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sgemm_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const f32,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSgemmBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alphas,
+            to_mem(a_buffer),
+            a_offsets,
+            a_ld,
+            to_mem(b_buffer),
+            b_offsets,
+            b_ld,
+            betas,
+            to_mem(c_buffer),
+            c_offsets,
+            c_ld,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSgemmBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dgemm_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const f64,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDgemmBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alphas,
+            to_mem(a_buffer),
+            a_offsets,
+            a_ld,
+            to_mem(b_buffer),
+            b_offsets,
+            b_ld,
+            betas,
+            to_mem(c_buffer),
+            c_offsets,
+            c_ld,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDgemmBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgemm_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const cl_float2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCgemmBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alphas,
+            to_mem(a_buffer),
+            a_offsets,
+            a_ld,
+            to_mem(b_buffer),
+            b_offsets,
+            b_ld,
+            betas,
+            to_mem(c_buffer),
+            c_offsets,
+            c_ld,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgemmBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgemm_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const cl_double2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZgemmBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alphas,
+            to_mem(a_buffer),
+            a_offsets,
+            a_ld,
+            to_mem(b_buffer),
+            b_offsets,
+            b_ld,
+            betas,
+            to_mem(c_buffer),
+            c_offsets,
+            c_ld,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgemmBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hgemm_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alphas: *const cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offsets: *const usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offsets: *const usize,
+    b_ld: usize,
+    betas: *const cl_half,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offsets: *const usize,
+    c_ld: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHgemmBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alphas,
+            to_mem(a_buffer),
+            a_offsets,
+            a_ld,
+            to_mem(b_buffer),
+            b_offsets,
+            b_ld,
+            betas,
+            to_mem(c_buffer),
+            c_offsets,
+            c_ld,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHgemmBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sgemm_strided_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastSgemmStridedBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            a_stride,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            b_stride,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            c_stride,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSgemmStridedBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dgemm_strided_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastDgemmStridedBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            a_stride,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            b_stride,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            c_stride,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDgemmStridedBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgemm_strided_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: cl_float2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastCgemmStridedBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            a_stride,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            b_stride,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            c_stride,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgemmStridedBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgemm_strided_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: cl_double2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastZgemmStridedBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            a_stride,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            b_stride,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            c_stride,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgemmStridedBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hgemm_strided_batched<T1, T2, T3>(
+    queue: &ocl::Queue,
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    a_stride: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    b_stride: usize,
+    beta: cl_half,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    c_stride: usize,
+    batch_count: usize,
+    wait_for: &[CoreEvent],
+) -> ocl::Result<Option<CoreEvent>>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+{
+    let _marker = enqueue_marker_wait(queue, wait_for)?;
+    let mut raw_ev: sys::cl_event = std::ptr::null_mut();
+    let status = with_queue_ptr(queue, |qptr| unsafe {
+        sys::CLBlastHgemmStridedBatched(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            a_stride,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            b_stride,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            c_stride,
+            batch_count,
+            qptr,
+            &mut raw_ev as *mut _,
+        )
+    });
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHgemmStridedBatched), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(unsafe { wrap_new_event(raw_ev) })
+}
+#[allow(clippy::too_many_arguments)]
+pub fn sgemm_with_temp_buffer<T1, T2, T3, T4>(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f32,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f32,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: &ocl::Buffer<T4>,
+) -> ocl::Result<()>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+{
+    let status = unsafe {
+        sys::CLBlastSgemmWithTempBuffer(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            queue,
+            event,
+            to_mem(temp_buffer),
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSgemmWithTempBuffer), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn dgemm_with_temp_buffer<T1, T2, T3, T4>(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: f64,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: f64,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: &ocl::Buffer<T4>,
+) -> ocl::Result<()>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+{
+    let status = unsafe {
+        sys::CLBlastDgemmWithTempBuffer(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            queue,
+            event,
+            to_mem(temp_buffer),
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDgemmWithTempBuffer), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn cgemm_with_temp_buffer<T1, T2, T3, T4>(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_float2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_float2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: &ocl::Buffer<T4>,
+) -> ocl::Result<()>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+{
+    let status = unsafe {
+        sys::CLBlastCgemmWithTempBuffer(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            queue,
+            event,
+            to_mem(temp_buffer),
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCgemmWithTempBuffer), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn zgemm_with_temp_buffer<T1, T2, T3, T4>(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_double2,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_double2,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: &ocl::Buffer<T4>,
+) -> ocl::Result<()>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+{
+    let status = unsafe {
+        sys::CLBlastZgemmWithTempBuffer(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            queue,
+            event,
+            to_mem(temp_buffer),
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZgemmWithTempBuffer), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn hgemm_with_temp_buffer<T1, T2, T3, T4>(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    alpha: cl_half,
+    a_buffer: &ocl::Buffer<T1>,
+    a_offset: usize,
+    a_ld: usize,
+    b_buffer: &ocl::Buffer<T2>,
+    b_offset: usize,
+    b_ld: usize,
+    beta: cl_half,
+    c_buffer: &ocl::Buffer<T3>,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    event: *mut cl_event,
+    temp_buffer: &ocl::Buffer<T4>,
+) -> ocl::Result<()>
+where
+    T1: ocl::OclPrm,
+    T2: ocl::OclPrm,
+    T3: ocl::OclPrm,
+    T4: ocl::OclPrm,
+{
+    let status = unsafe {
+        sys::CLBlastHgemmWithTempBuffer(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            alpha,
+            to_mem(a_buffer),
+            a_offset,
+            a_ld,
+            to_mem(b_buffer),
+            b_offset,
+            b_ld,
+            beta,
+            to_mem(c_buffer),
+            c_offset,
+            c_ld,
+            queue,
+            event,
+            to_mem(temp_buffer),
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHgemmWithTempBuffer), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn s_gemm_temp_buffer_size(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+) -> ocl::Result<()> {
+    let status = unsafe {
+        sys::CLBlastSGemmTempBufferSize(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            a_offset,
+            a_ld,
+            b_offset,
+            b_ld,
+            c_offset,
+            c_ld,
+            queue,
+            temp_buffer_size,
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastSGemmTempBufferSize), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn d_gemm_temp_buffer_size(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+) -> ocl::Result<()> {
+    let status = unsafe {
+        sys::CLBlastDGemmTempBufferSize(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            a_offset,
+            a_ld,
+            b_offset,
+            b_ld,
+            c_offset,
+            c_ld,
+            queue,
+            temp_buffer_size,
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastDGemmTempBufferSize), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn c_gemm_temp_buffer_size(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+) -> ocl::Result<()> {
+    let status = unsafe {
+        sys::CLBlastCGemmTempBufferSize(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            a_offset,
+            a_ld,
+            b_offset,
+            b_ld,
+            c_offset,
+            c_ld,
+            queue,
+            temp_buffer_size,
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastCGemmTempBufferSize), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn z_gemm_temp_buffer_size(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+) -> ocl::Result<()> {
+    let status = unsafe {
+        sys::CLBlastZGemmTempBufferSize(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            a_offset,
+            a_ld,
+            b_offset,
+            b_ld,
+            c_offset,
+            c_ld,
+            queue,
+            temp_buffer_size,
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastZGemmTempBufferSize), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn h_gemm_temp_buffer_size(
+    layout: CLBlastLayout,
+    a_transpose: CLBlastTranspose,
+    b_transpose: CLBlastTranspose,
+    m: usize,
+    n: usize,
+    k: usize,
+    a_offset: usize,
+    a_ld: usize,
+    b_offset: usize,
+    b_ld: usize,
+    c_offset: usize,
+    c_ld: usize,
+    queue: *mut cl_command_queue,
+    temp_buffer_size: *mut usize,
+) -> ocl::Result<()> {
+    let status = unsafe {
+        sys::CLBlastHGemmTempBufferSize(
+            layout,
+            a_transpose,
+            b_transpose,
+            m,
+            n,
+            k,
+            a_offset,
+            a_ld,
+            b_offset,
+            b_ld,
+            c_offset,
+            c_ld,
+            queue,
+            temp_buffer_size,
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastHGemmTempBufferSize), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn clear_cache() -> ocl::Result<()> {
+    let status = unsafe { sys::CLBlastClearCache() };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastClearCache), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn fill_cache(device: cl_device_id) -> ocl::Result<()> {
+    let status = unsafe { sys::CLBlastFillCache(device) };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastFillCache), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
+#[allow(clippy::too_many_arguments)]
+pub fn override_parameters(
+    device: cl_device_id,
+    kernel_name: *const ::std::os::raw::c_char,
+    precision: CLBlastPrecision,
+    num_parameters: usize,
+    parameters_names: *mut *const ::std::os::raw::c_char,
+    parameters_values: *const usize,
+) -> ocl::Result<()> {
+    let status = unsafe {
+        sys::CLBlastOverrideParameters(
+            device,
+            kernel_name,
+            precision,
+            num_parameters,
+            parameters_names,
+            parameters_values,
+        )
+    };
+    if !clblast_ok(status) {
+        return Err(ocl::Error::from(format!(
+            concat!(stringify!(CLBlastOverrideParameters), " failed: code={:?}"),
+            status
+        )));
+    }
+    Ok(())
+}
