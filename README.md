@@ -13,13 +13,6 @@ Safe-ish bindings for [CLBlast](https://github.com/CNugteren/CLBlast) and auto-g
 
 ```toml
 [dependencies]
-clblast-binding = "0.1.0-alpha.1"
-```
-
-or use Git
-
-```toml
-[dependencies]
 clblast-binding = { git = "https://github.com/miko-misa/clblast-binding" }
 ```
 
